@@ -1,0 +1,142 @@
+id: dart
+extensions: [".dart"]
+comment:
+  line: "//"
+  blockStart: "/*"
+  blockEnd: "*/"
+strings: ["\"", "'"]
+keywords: [abstract, as, assert, async, await, base, break, case, catch, class, const,
+  continue, covariant, default, deferred, do, dynamic, else, enum, export, extends,
+  extension, external, factory, false, final, finally, for, get, hide, if, implements,
+  import, in, interface, is, late, library, mixin, new, null, on, operator, part,
+  required, rethrow, return, sealed, set, show, static, super, switch, sync, this,
+  throw, true, try, typedef, var, void, when, while, with, yield]
+types: [int, double, num, bool, String, Object, Never, Null, List, Set, Map, Iterable,
+  Future, Stream, Function, Record, Symbol, Type, Duration, DateTime, Uri, RegExp,
+  StringBuffer, Comparable, Exception, Error,
+  # Flutter is what Dart is here for, and these are the names a widget tree is made of. They are
+  # types like any other to the colourer; listing them is the difference between a build method
+  # that reads as structure and one that reads as a wall of identifiers.
+  Widget, StatelessWidget, StatefulWidget, State, BuildContext, Key, GlobalKey,
+  MaterialApp, Scaffold, AppBar, Text, Icon, Container, Padding, Center, Align,
+  Column, Row, Stack, Expanded, Flexible, SizedBox, ListView, GridView, SingleChildScrollView,
+  ElevatedButton, TextButton, IconButton, FloatingActionButton, TextField, Image,
+  ThemeData, ColorScheme, Colors, EdgeInsets, MainAxisAlignment, CrossAxisAlignment,
+  Navigator, MediaQuery, Theme, StatefulBuilder, ValueNotifier, ChangeNotifier]
+formatter:
+  # `dart format` is the whole formatter for this language — there is no style to configure and no
+  # second implementation to fall back to. It comes with the Flutter SDK, so it is present exactly
+  # when Dart is. Two-space indent is not a preference here: it is what dart format produces, and
+  # the basic rules below only apply when the toolchain is missing.
+  command: "dart format {{file}} >/dev/null 2>&1 || true"
+  indent: 2
+  trimTrailingWhitespace: true
+  insertFinalNewline: true
+completions:
+  - label: st
+    detail: StatelessWidget
+    insert: "class $1 extends StatelessWidget {\n  const $1({super.key});\n\n  @override\n  Widget build(BuildContext context) {\n    return $0;\n  }\n}"
+  - label: stf
+    detail: StatefulWidget
+    insert: "class $1 extends StatefulWidget {\n  const $1({super.key});\n\n  @override\n  State<$1> createState() => _$1State();\n}\n\nclass _$1State extends State<$1> {\n  @override\n  Widget build(BuildContext context) {\n    return $0;\n  }\n}"
+  - label: build
+    detail: build method
+    insert: "@override\nWidget build(BuildContext context) {\n  return $0;\n}"
+  - label: setstate
+    detail: setState
+    insert: "setState(() {\n  $0\n});"
+  - label: initstate
+    detail: initState
+    insert: "@override\nvoid initState() {\n  super.initState();\n  $0\n}"
+  - label: dispose
+    detail: dispose
+    insert: "@override\nvoid dispose() {\n  $0\n  super.dispose();\n}"
+  - label: main
+    detail: main entry point
+    insert: "void main() {\n  $0\n}"
+  - label: runapp
+    detail: runApp
+    insert: "void main() {\n  runApp(const $1());\n}$0"
+  - label: fn
+    detail: Function
+    insert: "$1 $2($3) {\n  $0\n}"
+  - label: afn
+    detail: Async function
+    insert: "Future<$1> $2($3) async {\n  $0\n}"
+  - label: cls
+    detail: Class
+    insert: "class $1 {\n  $0\n}"
+  - label: ctor
+    detail: Const constructor
+    insert: "const $1({super.key});$0"
+  - label: forr
+    detail: for-in loop
+    insert: "for (final $1 in $2) {\n  $0\n}"
+  - label: ifn
+    detail: if block
+    insert: "if ($1) {\n  $0\n}"
+  - label: switch
+    detail: switch statement
+    insert: "switch ($1) {\n  case $2:\n    $0\n  default:\n}"
+  - label: try
+    detail: try / catch
+    insert: "try {\n  $1\n} on $2 catch (e) {\n  $0\n}"
+  - label: print
+    detail: Print
+    insert: "print($0);"
+  - label: fb
+    detail: FutureBuilder
+    insert: "FutureBuilder<$1>(\n  future: $2,\n  builder: (context, snapshot) {\n    $0\n  },\n)"
+helpers:
+  - title: StatelessWidget
+    snippet: |
+      class $1 extends StatelessWidget {
+        const $1({super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          return $0;
+        }
+      }
+  - title: StatefulWidget with state
+    snippet: |
+      class $1 extends StatefulWidget {
+        const $1({super.key});
+
+        @override
+        State<$1> createState() => _$1State();
+      }
+
+      class _$1State extends State<$1> {
+        @override
+        Widget build(BuildContext context) {
+          return $0;
+        }
+      }
+  - title: Scaffold screen
+    snippet: |
+      Scaffold(
+        appBar: AppBar(title: const Text('$1')),
+        body: Center(child: $0),
+      )
+  - title: Column of widgets
+    snippet: |
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          $0
+        ],
+      )
+  - title: ListView.builder
+    snippet: |
+      ListView.builder(
+        itemCount: $1,
+        itemBuilder: (context, index) {
+          return $0;
+        },
+      )
+  - title: setState
+    snippet: |
+      setState(() {
+        $0
+      });

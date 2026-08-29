@@ -1,0 +1,9 @@
+id: flutter-test
+label: Run tests
+kind: build
+# pubspec.yaml is what makes a directory a Dart package, and every Flutter command needs
+# one. Gated on it so these are offered on a Flutter clone and nowhere else.
+requires: ["pubspec.yaml"]
+terminals:
+  - label: Test
+    script: test.sh

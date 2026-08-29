@@ -1,0 +1,16 @@
+# Debug rather than release, deliberately: a release build wants a signing config a scaffolded
+# project does not have, and the everyday reason to build an APK on the device is to install it on
+# the device.
+#
+# The APK is large — a debug Flutter engine `.so` is ~400MB once its symbols are kept, which they
+# must be here. A project scaffolded by this pack's template limits its *debug* variant to
+# arm64-v8a for that reason; a project that was cloned has not been told to, and pays for four.
+id: flutter-build-apk
+label: Build debug APK
+kind: build
+# pubspec.yaml is what makes a directory a Dart package, and every Flutter command needs
+# one. Gated on it so these are offered on a Flutter clone and nowhere else.
+requires: ["pubspec.yaml"]
+terminals:
+  - label: Build
+    script: build-apk.sh

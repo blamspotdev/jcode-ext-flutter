@@ -1,0 +1,26 @@
+id: flutter-app
+name: Flutter App
+description: A Flutter app scaffolded by `flutter create`, patched so it builds on this device, and wired to run on the virtual device with hot reload. Needs the Flutter SDK and the Android SDK.
+requires:
+  - flutter
+  - android-sdk
+inputs:
+  - id: org
+    label: Organisation (package prefix)
+    type: text
+    default: com.example
+  - id: platforms
+    label: Platforms
+    type: select
+    # Linux desktop is a real target here — the distro is arm64 Linux and Flutter builds for it —
+    # but it needs GTK and clang, which the Flutter toolchain entry does not install. Android alone
+    # is the default because that is the one the virtual device runs.
+    options: ["android", "android,linux"]
+    default: "android"
+recipe:
+  - label: Create the Flutter project
+    script: create-flutter-project.sh
+  - label: Make the project buildable on this device
+    script: keep-native-debug-symbols.sh
+  - label: Configure Build & Run
+    script: configure-build-run.sh

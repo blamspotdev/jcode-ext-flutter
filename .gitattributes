@@ -1,0 +1,12 @@
+# These files are read by a shell inside the Linux distro, never by Windows.
+#
+# `core.autocrlf=true` is normal on a Windows checkout, and it silently breaks every one of them:
+# `dash` reads `set -e\r` as `set: Illegal option -` and the script dies on line 3, with an error
+# that names neither the file nor the reason. Measured — it cost a scaffold that created its project
+# and then quietly skipped the two steps that make the project buildable.
+#
+# `eol=lf` pins the working-tree bytes regardless of the machine's autocrlf, which is what a file
+# destined for another operating system needs.
+*.sh text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf

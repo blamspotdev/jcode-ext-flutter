@@ -1,0 +1,16 @@
+# --- what a clone assumes it has -----------------------------------------
+#
+# A Flutter project written on a laptop assumes a laptop's toolchain, and none of what is missing
+# here announces itself — the build simply fails somewhere inside Gradle. `flutter doctor` names
+# the pieces, and the check after it names the one thing doctor cannot know about: this device's
+# NDK cannot strip, so a project that has not been patched for it fails on stripDebugSymbols
+# however healthy everything else is.
+id: flutter-doctor
+label: Check Flutter can build here
+kind: build
+# pubspec.yaml is what makes a directory a Dart package, and every Flutter command needs
+# one. Gated on it so these are offered on a Flutter clone and nowhere else.
+requires: ["pubspec.yaml"]
+terminals:
+  - label: Check
+    script: doctor.sh

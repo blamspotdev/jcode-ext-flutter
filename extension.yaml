@@ -1,0 +1,62 @@
+id: jcode.pack.flutter
+name: Flutter Dev Pack
+publisher: jcode
+version: 0.1.0
+type: language
+description: Dart language support, a Flutter app template that builds on this device, and the everyday Flutter commands.
+
+# Flutter on a phone, which is not the same shape as Flutter on a laptop:
+#
+#  * The SDK is a **git clone**, not the published tarball. Flutter builds arm64 engine artifacts
+#    but ships an x86-64-only Linux archive, so the clone is the only install that runs here. That
+#    is the `flutter` toolchain entry's business; this pack only requires it.
+#  * The template is **load-bearing rather than convenient.** A stock `flutter create` project
+#    cannot be built on this device at all — see templates/flutter-app.
+#  * `flutter run` drives JCode's own virtual device over the device adb the Android Dev Pack owns,
+#    hot reload included. That pack is required for it; nothing here re-implements a device.
+requires:
+  # The virtual device, its adb daemon and the native aarch64 adb client that reaches it. `flutter
+  # run -d localfilesystem:/run/jcode-vdevice-adb.sock` is the whole point of Flutter on this
+  # device, and every piece of that path belongs to the Android Dev Pack.
+  extensions: [jcode.pack.android]
+  sdks: [flutter]
+  lsps: [dart-language-server]
+suggests:
+  # Only for building an APK. Dart alone, and `flutter run -d linux`, need none of it — and it is
+  # several hundred megabytes, so it is offered rather than imposed. The template requires it,
+  # because a template that scaffolds an Android project and cannot build it is a trap.
+  sdks: [android-sdk]
+
+# The everyday Flutter commands, so a project that was cloned rather than scaffolded here is one
+# tap from a build. All `kind: build`: each produces an artifact or a report and exits. Running the
+# app is deliberately not here — that is `flutter run` in a terminal, because hot reload is an
+# interactive session with a keyboard, not a task that finishes.
+contributes:
+  runConfigPresets:
+    - flutter-doctor
+    - flutter-pub-get
+    - flutter-analyze
+    - flutter-test
+    - flutter-build-apk
+    - flutter-clean
+templates:
+  - flutter-app
+
+languages:
+  - dart
+# --- header fields merged from extension.jehm ---
+shortDescription: Dart coloring, completions and snippets, a Flutter app template that builds on-device, and the everyday Flutter commands.
+# 1.7.0 is where the virtual device became the Android Dev Pack's, which this pack requires. On an
+# older JCode that pack cannot be installed at all, so neither can this one.
+minJCodeVersion: 1.7.0
+targetJCodeVersion: 1.7.0
+category: Languages
+subcategory: Flutter
+images:
+  icon: media/icon.png
+  samples: []
+  walkthrough: []
+entry:
+  manifest: extension.yaml
+  ui: null
+  libs: []
