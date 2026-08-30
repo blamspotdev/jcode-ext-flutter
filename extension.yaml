@@ -56,7 +56,26 @@ images:
   icon: media/icon.png
   samples: []
   walkthrough: []
+api:
+  # `exec` runs `flutter create` in the Linux runtime, which is the only way to scaffold a Flutter
+  # project: the tool writes the tree itself and its output is the answer to what was made.
+  # `workbench` is the New Project wizard's -- it creates a project in the workspace and then opens
+  # it, and closes its own dialog afterwards. Without them the wizard scaffolds a project it cannot
+  # show you.
+  capabilities: [exec, workbench]
+
 entry:
   manifest: extension.yaml
   ui: null
   libs: []
+  # This pack's native half: the New Flutter Project gallery, loaded into JCode's own process on
+  # demand. See native/ for what it is and JCode's NativeExtensionLoader for how it gets in.
+  native:
+    # Its `views` id is what the flutter-app template's `gallery:` names. JCode's New Project dialog
+    # asks for the project's name, opens the view named there and steps aside; the name rides along
+    # after a colon (`newFlutterProject:MyApp`), so the route is the part in front of it.
+    - id: newproject
+      apk: lib/newproject.apk
+      class: dev.jcode.ext.flutter.newproject.NewProjectExtension
+      abi: 3
+      views: [newFlutterProject]
