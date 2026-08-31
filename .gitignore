@@ -1,2 +1,11 @@
 out/
 *.jext
+
+# The native module's payload and Gradle's own working state. `lib/` holds the archives the build
+# copies in, which ship but are not sources.
+lib/
+.gradle/
+.kotlin/
+build/
+native/*/build/
+local.properties

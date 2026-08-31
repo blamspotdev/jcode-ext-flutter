@@ -1,6 +1,11 @@
 id: flutter-app
 name: Flutter App
 description: A Flutter app scaffolded by `flutter create`, patched so it builds on this device, and wired to run on the virtual device with hot reload. Needs the Flutter SDK and the Android SDK.
+# The kinds of Flutter project are a gallery, not a dropdown: an app, an empty app, a package, a
+# plugin and a module differ in what they *are*, and JCode's own configure step has no way to show
+# that. It gets the name and hands over to this pack's view, which draws the gallery and scaffolds
+# from it -- including the two `inputs:` below, which it asks in its own Configure step.
+gallery: newFlutterProject
 requires:
   - flutter
   - android-sdk

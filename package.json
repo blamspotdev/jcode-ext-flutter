@@ -1,0 +1,9 @@
+{
+  "name": "jcode-ext-flutter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Flutter Dev Pack for JCode — Dart language support, project templates and the New Flutter Project gallery.",
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}
